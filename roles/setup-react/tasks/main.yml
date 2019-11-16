@@ -1,0 +1,18 @@
+---
+# tasks file for setup-react
+
+##Installing NodeJS
+- name: Install Node
+  command: "brew install node"
+
+- name: Install react
+  command: "npx create-react-app {{ project_name }}"
+  args:
+    chdir: "~"
+
+- import_tasks: react-starter.yml
+
+- name: Open up project in visual code
+  command: code .
+  args:
+    chdir: "~/{{ project_name }}"

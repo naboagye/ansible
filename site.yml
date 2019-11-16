@@ -1,0 +1,6 @@
+---
+
+- name: Start
+
+  roles:
+    - react-setup

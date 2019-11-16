@@ -1,0 +1,15 @@
+---
+- name: Navigate to project folder
+  command: cd ~/{{ project_name }}
+
+- name: Install react bootstrap
+  command: "npm install react-bootstrap bootstrap"
+
+- name: Install material ui
+  command: "npm install @material-ui/core"
+
+- name: Install styled components
+  command: "npm install styled-components@beta"
+
+- name: Install redux
+  command: "npm install --save react-redux"
