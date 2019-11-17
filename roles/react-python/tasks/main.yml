@@ -1,5 +1,5 @@
 ---
-# tasks file for setup-react-express
+# tasks file for react-python
 
 ##Installing NodeJS
 - name: Check if Node is installed
@@ -20,7 +20,7 @@
 
 - import_tasks: react-starter.yml
 
-- import_tasks: express-starter.yml
+- import_tasks: flask-starter.yml
 
 - import_tasks: mongodb-starter.yml
 

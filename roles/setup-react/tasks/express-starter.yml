@@ -1,0 +1,17 @@
+---
+- name: generate express app
+  command: "npx express-generator {{ project_name }}-backend"
+  args:
+    chdir: "~/{{ project_name }}"
+
+- name: Navigate to project folder
+  command: cd ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: DDD
+  command: npm install
+
+- name: Install express
+  npm: name={{ item }} state=present global=yes
+  with_items:
+    - cors
+    - helmet

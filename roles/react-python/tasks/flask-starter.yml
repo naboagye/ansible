@@ -1,0 +1,65 @@
+---
+- name: create folder
+  command: mkdir ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: change into project folder
+  command: cd ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: Clone flask base git
+  git:
+    repo: "https://github.com/hack4impact/flask-base.git"
+    dest: ~/{{ project_name }}/{{ project_name }}-backend/
+    clone: yes
+
+- name: Navigate to project folder
+  command: cd ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: create config file
+  command: touch config.env
+  args:
+    chdir: ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: generate secret key
+  command: python3 -c "import secrets; print(secrets.token_hex(16))"
+
+- name: write secret key to config file
+  copy:
+    content: "SECRET_KEY=Generated_Random_String"
+    dest: ~/{{ project_name }}/{{ project_name }}-backend/config.env
+
+- name:
+  lineinfile:
+    path: ~/{{ project_name }}/{{ project_name }}-backend/requirements.txt
+    # String to Search
+    regexp: "psycopg2==2.8.3"
+    # State is set to Absent to remove if the Searching Line is found
+    state: absent
+
+- name: update pip
+  command: pip freeze > requirements.txt
+
+- name: install requirements
+  pip:
+    requirements: ~/{{ project_name }}/{{ project_name }}-backend/requirements.txt
+    virtualenv: ~/ansible
+
+# - name: install sass
+#   command: brew install sass/sass/sass
+
+- name: install redis
+  command: brew install redis
+
+- name: install postgresQL
+  command: brew install postgresql
+
+- name: create database
+  command: python manage.py recreate_db
+  args:
+    chdir: ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: start flask app
+  command: honcho start -e config.env -f Local
+  async: 60
+  poll: 0
+  args:
+    chdir: ~/{{ project_name }}/{{ project_name }}-backend

@@ -1,0 +1,23 @@
+---
+- name: Navigate to project folder
+  command: cd ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: Install MongoDB in npm
+  npm:
+    name: mongodb
+    path: ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: make data directory
+  command: mkdir ~/{{ project_name }}/{{ project_name }}-backend/data
+
+- name: Navigate to project folder
+  command: cd ~/{{ project_name }}/{{ project_name }}-backend
+
+- name: update brew
+  command: brew update
+
+- name: tap
+  command: "brew tap mongodb/brew"
+
+- name: Install mongodb on mac
+  command: brew install mongodb-community
